@@ -40,3 +40,6 @@ P = 4;
 
 % Dumping frequency 
 E = 0.85;
+
+% Add comment
+test = 2.4;
