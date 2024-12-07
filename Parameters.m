@@ -16,10 +16,10 @@ R_r = 0.1091;
 % Mutual inductance (H)
 L_m = 0.0408;
 R_fe = 213.2; % (Ohm)
-% Stator leakage inductance (mH)
-L_ls = 1.8;
-% Rotor leakgae inductance (mH)
-L_lr = 1.8;
+% Stator leakage inductance (H)
+L_ls = 1.8e-3;
+% Rotor leakage inductance (H)
+L_lr = 1.8e-3;
 % Rated speed (rpm)
 N_r = 1460;
 % Moment of inertia (kg.m^2)
@@ -29,37 +29,48 @@ B = 0.0129;
 % Pole Number
 P = 4;
 % Dumping frequency 
-E = 0.85;
+Xi = 0.85;
 
 %% Power Supply
 
 % Phase-to-phase RMS voltage (V)
 U_ac = 380;
 f_grid = 50;
-R_grid = 1e-3; % TO CHECK
-L_grid = 1e-12; % TO CHECK
+R_grid = 0.2; % TO CHECK
+L_grid = 20e-6; % TO CHECK
 
 %% Rectifier
 
 % Output inductor (H)
 L_rectif = 10e-3;
+
 % Diode Ron (Ohm)
-R_on = 1e-3;
+R_on_rect = 1e-3;
 % Diode Vf (V)
-V_f = 0;
+V_f_rect = 0;
 % Diode Snubber R (Ohm)
-R_snubber = 500;
+R_snub_rect = 500;
 % Diode Subber C (F)
-C_snubber = 250e-9;
+C_snub_rect = 250e-9;
 
 %% Inverter
 
+% Frequency index (mf = fsw/f)
+m_f = 39;
+% Amplitude index (m)
+m = 1;
+% Switching frequency
+f_switch = f_r*m_f;
+
 % Input DC-link capacitor (F)
 C_dc = 15e-3;
+
 % FET Ron (Ohm)
-R_on_fet = 1e-1;
+R_on_inv = 1e-1;
 % Internal Diode Resistance (Ohm)
-R_d = 1e-2;
+R_d_inv  = 1e-2;
+% Internal diode inductance (H)
+L_on_inv = 0;
 % Internal Diode Vf (V)
 V_f_inv = 0;
 % Snubber R (Ohm)
