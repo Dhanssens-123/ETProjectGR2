@@ -1,6 +1,25 @@
 %%% EXAM4 - GR2 - Parameters
 clear variables; close all; clc;
 
+%% Reference
+% Start Duration
+d_start = 0.5;
+% Steady Start Duration
+d_steady_start = 1;
+% Steady Duration
+d_steady = 2;
+% Steady Stop Duration
+d_steady_stop = 1;
+% Stop Duration
+d_stop = 0.5;
+% Total Time
+T_tot = d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
+
+% Steady Speed
+N_steady = 1450;
+
+%% Control
+
 %% Induction Motor
 
 % Rated power (W)
