@@ -13,12 +13,12 @@ d_steady_stop = 1;
 % Stop Duration
 d_stop = 0.5;
 % Total Time
-T_tot = d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
+T_tot = 30; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
 
 % Steady Speed
 N_steady = 1450;
 
-%% Control
+Ts = 2e-4;
 
 %% Induction Motor
 
@@ -49,6 +49,30 @@ B = 0.0129;
 P = 4;
 % Dumping frequency 
 Xi = 0.85;
+
+% Nominal flux
+Phi_n = V_r*sqrt(2)/(2*pi*f_r); %/sqrt(3)
+% Torque
+T_r = P_r/(N_r*2*pi/60);
+T_sat = 1.5*T_r;
+
+%% Control
+Ts_w = 80*Ts;
+T_sigma = 1.5*Ts_w;
+K_sigma = 1;
+T_n = 4*T_sigma; %Tuning w/ symmetrical optimum
+T_i = 8*K_sigma*T_sigma^2/J; %Tuning w/ symmetrical optimum
+Ki = 1/T_i*Ts_w; %*T_sw bc Tustin
+Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
+
+%% V/f profile
+Zeq = sqrt(R_s^2+(2*pi*f_r*(L_ls+L_m))^2);
+Is0 = V_r/Zeq;
+V_min = R_s*Is0;
+f_min = V_min/(Phi_n*2*pi);
+
+V_f_in =  [-f_r-1 -f_r -f_min 0 f_min f_r f_r+1]*2*pi;
+V_f_out = [V_r V_r V_min V_min V_min V_r V_r]*sqrt(2)/sqrt(3)/V_r; 
 
 %% Power Supply
 
