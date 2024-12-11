@@ -5,4 +5,3 @@ test2 = 44
 test_maxime = 7.5
 
 test = 2;
-cucou = 14;
