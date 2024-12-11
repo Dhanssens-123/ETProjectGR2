@@ -17,7 +17,7 @@ d_steady_stop = 1;
 % Stop Duration
 d_stop = 0.5;
 % Total Time
-T_tot = 30; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
+T_tot = 10; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
 
 % Steady Speed
 N_steady = 1450;
@@ -103,13 +103,17 @@ C_snub_inv = inf;
 % TO COMMENT
 
 % Nominal flux
-Phi_n = V_r*sqrt(2)/(2*pi*f_r); %/sqrt(3)
+Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep 
+% the flux constant and at the rated value -> Phi_n = V_n/w_n (HYP steady
+% state + neglect the voltage drop on R_s) + we divide by sqrt(3) to have
+% the phase voltage
+
 % Rated torque (Nm)
-T_r = P_r/(N_r*2*pi/60);
+T_r = P_r/(N_r*2*pi/60); % T = P/w
 % Maximum authorised torque (Nm)
 T_sat = 5*T_r; 
 
-Ts_w = 80/f_switch;
+Ts_w = 80/f_switch; % 80 choisi un peu au pif honnetement
 T_sigma = 1.5*Ts_w; % To check (cf. Slide)
 K_sigma = 1;
 T_n = 4*T_sigma; % Tuning w/ symmetrical optimum
