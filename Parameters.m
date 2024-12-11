@@ -1,6 +1,10 @@
 %%% EXAM4 - GR2 - Parameters
 clear variables; close all; clc;
 
+%% Simulation
+% Powergui Discrete Time Step
+Ts = 5e-5; % ~1/10 of f_switch
+
 %% Reference
 % Start Duration
 d_start = 0.5;
@@ -17,8 +21,6 @@ T_tot = 30; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
 
 % Steady Speed
 N_steady = 1450;
-
-Ts = 5e-5;
 
 %% Induction Motor
 
@@ -49,12 +51,6 @@ B = 0.0129;
 P = 4;
 % Dumping frequency 
 Xi = 0.85;
-
-% Nominal flux
-Phi_n = V_r*sqrt(2)/(2*pi*f_r); %/sqrt(3)
-% Torque
-T_r = P_r/(N_r*2*pi/60);
-T_sat = 5*T_r;
 
 %% Power Supply
 
@@ -104,15 +100,26 @@ R_snub_inv = 1e5;
 C_snub_inv = inf;
 
 %% Control
+% TO COMMENT
+
+% Nominal flux
+Phi_n = V_r*sqrt(2)/(2*pi*f_r); %/sqrt(3)
+% Rated torque (Nm)
+T_r = P_r/(N_r*2*pi/60);
+% Maximum authorised torque (Nm)
+T_sat = 5*T_r; 
+
 Ts_w = 80/f_switch;
 T_sigma = 1.5*Ts_w; % To check (cf. Slide)
 K_sigma = 1;
-T_n = 4*T_sigma; %Tuning w/ symmetrical optimum
-T_i = 8*K_sigma*T_sigma^2/J; %Tuning w/ symmetrical optimum
-Ki = 1/T_i*Ts_w; %*T_sw bc Tustin
+T_n = 4*T_sigma; % Tuning w/ symmetrical optimum
+T_i = 8*K_sigma*T_sigma^2/J; % Tuning w/ symmetrical optimum
+Ki = 1/T_i*Ts_w; % *T_sw bc Tustin
 Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
 
 %% V/f profile
+% TO COMMENT
+
 Zeq = sqrt(R_s^2+(2*pi*f_r*(L_ls+L_m))^2);
 Is0 = V_r/Zeq;
 V_min = R_s*Is0;
