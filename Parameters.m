@@ -7,17 +7,36 @@ Ts = 5e-5; % ~1/10 of f_switch
 
 %% Reference
 % Start Duration
-d_start = 0.5;
+%d_start = 0.5;
 % Steady Start Duration
-d_steady_start = 1;
+%d_steady_start = 1;
 % Steady Duration
-d_steady = 2;
+%d_steady = 2;
 % Steady Stop Duration
-d_steady_stop = 1;
+%d_steady_stop = 1;
 % Stop Duration
-d_stop = 0.5;
+%d_stop = 0.5;
 % Total Time
-T_tot = 10; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
+%T_tot = 10; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
+
+% Start Duration
+d_start = 0.5;
+% Start up slope 
+d_start_upslope = 1;
+% Duration up slope
+d_duration_upslope = 1;
+% start up step
+d_start_upstep = 4;
+% start down slope
+d_start_down_slope = 8;
+% Duration down slope
+d_duration_down_slope = 1;
+% start down step
+d_start_down_step = 11;
+% Stop Duration
+d_stop = 2;
+% Total Time
+T_tot = d_start_down_step + d_stop; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
 
 % Steady Speed
 N_steady = 1450;
