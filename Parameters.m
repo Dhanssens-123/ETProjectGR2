@@ -100,8 +100,6 @@ R_snub_inv = 1e5;
 C_snub_inv = inf;
 
 %% Control
-% TO COMMENT
-
 % Nominal flux
 Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep 
 % the flux constant and at the rated value -> Phi_n = V_n/w_n (HYP steady
@@ -114,16 +112,34 @@ T_r = P_r/(N_r*2*pi/60); % T = P/w
 T_sat = 5*T_r; 
 
 Ts_w = 80/f_switch; % 80 choisi un peu au pif honnetement
-T_sigma = 1.5*Ts_w; % To check (cf. Slide)
-K_sigma = 1;
-T_n = 4*T_sigma; % Tuning w/ symmetrical optimum
-T_i = 8*K_sigma*T_sigma^2/J; % Tuning w/ symmetrical optimum
-Ki = 1/T_i*Ts_w; % *T_sw bc Tustin
+T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
+% 1.5 PWM = delay of 0.5 and controller = delay of 1 (cf. (1) Slide 18)
+K_sigma = 1; % Equivalent gain of all elements, simplified to 1 (cf. (1) Slide 18)
+T_n = 4*T_sigma; % Tuning w/ symmetrical optimum (*)
+T_i = 8*K_sigma*T_sigma^2/J; % Tuning w/ symmetrical optimum (*)
+Ki = 1/T_i*Ts_w; % *T_sw bc Tustin (2)
 Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
 
-%% V/f profile
-% TO COMMENT
+% (1) Refresh slides EE-465_W2_BOOST_MODELING_PI
 
+% (*) J*dw/dt + B*w = Tem-TL 
+% => G(s) = W(s)/Tem(s) = 1/(J*s+B) ~ 1/(J*s)
+% -> Pure integrator => Symetrical optimum (cf. (1) Slide 24)
+
+% (2) Refresh slides EE-465_W3_PI_AW_DISCRETIZATION
+% -> Integrator Windup phenomenon = Slides 6-7
+% -> Anti-windup  Slides 8-10
+% -> Tustin Slides 22-23 + 28-29
+
+% (3) W7 - EE-565_2023-2024_IM_Scalar Control
+% -> For speed control: w_s = P/2*w_r + 2/3*R_r/(P/2)*Tem/Phi_n^2 : 
+% Slide 10-12 + 19 (HYP steady state + s~0)
+
+%% V/f profile
+% V/f scalar control (HYP steady state + neglect voltage drop on R_s): 
+% (3) Slides 15-23
+
+% Resistive drop compensation for small frequencies -> (3) Slide 21
 Zeq = sqrt(R_s^2+(2*pi*f_r*(L_ls+L_m))^2);
 Is0 = V_r/Zeq;
 V_min = R_s*Is0;
