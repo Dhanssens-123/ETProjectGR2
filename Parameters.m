@@ -106,9 +106,11 @@ f_switch = f_r*m_f;
 C_dc = 15e-3;
 
 % FET Ron (Ohm)
-R_on_inv = 1e-1;
+% R_on_inv = 1e-1;
+R_on_inv = 4e-3;
 % Internal Diode Resistance (Ohm)
-R_d_inv  = 1e-2;
+% R_d_inv  = 1e-2;
+R_d_inv  = 4.17e-3;
 % Internal diode inductance (H)
 L_on_inv = 0;
 % Internal Diode Vf (V)
