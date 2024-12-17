@@ -3,7 +3,7 @@ clear variables; close all; clc;
 
 %% Simulation
 % Powergui Discrete Time Step
-Ts = 5e-5; % ~1/10 of f_switch
+Ts = 2e-6; % ~1/10 of f_switch, peut etre remis à 5e-5 pour compute rapide, ou 2e-6 pour compute précis
 
 %% Reference
 % Start Duration
@@ -22,11 +22,11 @@ Ts = 5e-5; % ~1/10 of f_switch
 % Start Duration
 d_start = 0.5;
 % Start up slope 
-d_start_upslope = 4;
+d_start_upslope = 1;
 % Duration up slope
 d_duration_upslope = 1;
 % start up step
-d_start_upstep = 1;
+d_start_upstep = 4;
 % start down slope
 d_start_down_slope = 8;
 % Duration down slope
@@ -96,7 +96,7 @@ C_snub_rect = 250e-9;
 %% Inverter
 
 % Frequency index (mf = fsw/f)
-m_f = 39;
+m_f = 399; %39 pour allez vite, 399 pour précision 
 % Amplitude index (m)
 m = 1;
 % Switching frequency (PWM)
@@ -130,10 +130,9 @@ Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep
 % Rated torque (Nm)
 T_r = P_r/(N_r*2*pi/60); % T = P/w
 % Maximum authorised torque (Nm)
-T_sat = inf*T_r; 
+T_sat = T_r; 
 
-% Ts_w = 80/f_switch; % 80 choisi un peu au pif honnetement
-Ts_w = Ts;
+Ts_w = 80/f_switch; % 80 choisi un peu au pif honnetement
 T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
 % 1.5 PWM = delay of 0.5 and controller = delay of 1 (cf. (1) Slide 18)
 K_sigma = 1; % Equivalent gain of all elements, simplified to 1 (cf. (1) Slide 18)
