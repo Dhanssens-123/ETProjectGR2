@@ -3,7 +3,7 @@ clear variables; close all; clc;
 
 %% Simulation
 % Powergui Discrete Time Step
-Ts = 2e-6; % ~1/10 of f_switch, peut etre remis à 5e-5 pour compute rapide, ou 2e-6 pour compute précis
+Ts = 1e-5; % ~1/10 of f_switch, peut etre remis à 5e-5 pour compute rapide, ou 2e-6 pour compute précis
 
 %% Reference
 % Start Duration
@@ -96,7 +96,7 @@ C_snub_rect = 250e-9;
 %% Inverter
 
 % Frequency index (mf = fsw/f)
-m_f = 399; %39 pour allez vite, 399 pour précision 
+m_f = 39; %39 pour allez vite, 399 pour précision 
 % Amplitude index (m)
 m = 1;
 % Switching frequency (PWM)
