@@ -164,7 +164,7 @@ Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
 Zeq = sqrt(R_s^2+(2*pi*f_r*(L_ls+L_m))^2);
 Is0 = V_r/Zeq;
 V_min = R_s*Is0;
-f_min = V_min/(Phi_n*2*pi);
+f_min = V_min/(Phi_n*2*pi); %-> Nmin = 2*pi*fmin*30/pi = fmin*60
 
 V_f_in =  [-f_r-1 -f_r -f_min 0 f_min f_r f_r+1]*2*pi;
 V_f_out = [V_r V_r V_min V_min V_min V_r V_r]/V_r; 
