@@ -130,7 +130,7 @@ Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep
 % Rated torque (Nm)
 T_r = P_r/(N_r*2*pi/60); % T = P/w
 % Maximum authorised torque (Nm)
-T_sat = 5*T_r; 
+T_sat = 1*T_r; 
 
 Ts_w = 150/f_switch; % 80 choisi un peu au pif honnetement
 T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
@@ -168,3 +168,21 @@ f_min = V_min/(Phi_n*2*pi); %-> Nmin = 2*pi*fmin*30/pi = fmin*60
 
 V_f_in =  [-f_r-1 -f_r -f_min 0 f_min f_r f_r+1]*2*pi;
 V_f_out = [V_r V_r V_min V_min V_min V_r V_r]/V_r;  
+
+%% Bode
+% kpp = 1;
+% Gopenloop = tf(1, [J/kpp 0]);
+% Gcloseloop = tf(1, [J/kpp 1]);
+% 
+% figure
+% bode(Gcloseloop)
+% 
+% figure
+% margin(Gopenloop)
+
+%% PI via bode
+w_cs = f_switch/15/(2*pi); %[rad/s]
+Ts_w = 15/f_switch;
+%lecture 2 slide 16
+Ki = J*w_cs^2*Ts_w;
+Kp = 2*Xi*w_cs*J-B+Ki/2;
