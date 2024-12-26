@@ -7,19 +7,6 @@ Ts = 1e-5; % ~1/10 of f_switch, peut etre remis à 5e-5 pour compute rapide, ou 
 
 %% Reference
 % Start Duration
-%d_start = 0.5;
-% Steady Start Duration
-%d_steady_start = 1;
-% Steady Duration
-%d_steady = 2;
-% Steady Stop Duration
-%d_steady_stop = 1;
-% Stop Duration
-%d_stop = 0.5;
-% Total Time
-%T_tot = 10; %d_start + d_steady_start + d_steady + d_steady_stop + d_stop;
-
-% Start Duration
 d_start = 0.5;
 % Start up slope 
 d_start_upslope = 1;
@@ -40,6 +27,9 @@ T_tot = d_start_down_step + d_stop; %d_start + d_steady_start + d_steady + d_ste
 
 % Steady Speed
 N_steady = 1450;
+
+% Torque load
+T_load = 10;
 
 %% Induction Motor
 
