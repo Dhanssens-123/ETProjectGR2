@@ -112,7 +112,7 @@ C_snub_inv = inf;
 
 %% Control
 % Nominal flux
-Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep 
+Phi_n = V_r/sqrt(3)/(2*pi*f_r); % *sqrt(2)? NN car deja RMS %V/f approximation: we want to keep 
 % the flux constant and at the rated value -> Phi_n = V_n/w_n (HYP steady
 % state + neglect the voltage drop on R_s) + we divide by sqrt(3) to have
 % the phase voltage
@@ -122,14 +122,14 @@ T_r = P_r/(N_r*2*pi/60); % T = P/w
 % Maximum authorised torque (Nm)
 T_sat = 1*T_r; 
 
-Ts_w = 150/f_switch; % 80 choisi un peu au pif honnetement
+Ts_w = 150/f_switch; % outer loop 10 to 100 times slower than switching freq of PWM (~inner loop here)
 T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
 % 1.5 PWM = delay of 0.5 and controller = delay of 1 (cf. (1) Slide 18)
 K_sigma = 1; % Equivalent gain of all elements, simplified to 1 (cf. (1) Slide 18)
 T_n = 4*T_sigma; % Tuning w/ symmetrical optimum (*)
 T_i = 8*K_sigma*T_sigma^2/J; % Tuning w/ symmetrical optimum (*)
-Ki = 1/T_i*Ts_w; % *T_sw bc Tustin (2)
-Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
+Ki = 1/T_i; %*Ts_w; % *T_sw bc Tustin (2)
+Kp = T_n/T_i; %*Xi?? + Ki/2; %+K_i/2 bc Tustin
 
 % (1) Refresh slides EE-465_W2_BOOST_MODELING_PI
 
@@ -153,7 +153,7 @@ Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
 % Resistive drop compensation for small frequencies -> (3) Slide 21
 Zeq = sqrt(R_s^2+(2*pi*f_r*(L_ls+L_m))^2);
 Is0 = V_r/Zeq;
-V_min = R_s*Is0;
+V_min = R_s*Is0;%*1.5?
 f_min = V_min/(Phi_n*2*pi); %-> Nmin = 2*pi*fmin*30/pi = fmin*60
 
 V_f_in =  [-f_r-1 -f_r -f_min 0 f_min f_r f_r+1]*2*pi;
@@ -170,9 +170,9 @@ V_f_out = [V_r V_r V_min V_min V_min V_r V_r]/V_r;
 % figure
 % margin(Gopenloop)
 
-%% PI via bode
-w_cs = f_switch/15/(2*pi); %[rad/s]
-Ts_w = 15/f_switch;
-%lecture 2 slide 16
-Ki = J*w_cs^2*Ts_w;
-Kp = 2*Xi*w_cs*J-B+Ki/2;
+%% PI via bode -> nul
+% w_cs = f_switch/15/(2*pi); %[rad/s]
+% Ts_w = 15/f_switch;
+% %lecture 2 slide 16
+% Ki = J*w_cs^2*Ts_w;
+% Kp = 2*Xi*w_cs*J-B+Ki/2;
