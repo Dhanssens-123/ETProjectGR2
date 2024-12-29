@@ -86,7 +86,7 @@ C_snub_rect = 250e-9;
 %% Inverter
 
 % Frequency index (mf = fsw/f)
-m_f = 39; %39 pour allez vite, 399 pour précision 
+m_f = 201; %39 pour allez vite, 399 pour précision 
 % Amplitude index (m)
 m = 1;
 % Switching frequency (PWM)
@@ -112,7 +112,7 @@ C_snub_inv = inf;
 
 %% Control
 % Nominal flux
-Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep 
+Phi_n = V_r/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep 
 % the flux constant and at the rated value -> Phi_n = V_n/w_n (HYP steady
 % state + neglect the voltage drop on R_s) + we divide by sqrt(3) to have
 % the phase voltage
@@ -120,16 +120,16 @@ Phi_n = V_r*sqrt(2)/sqrt(3)/(2*pi*f_r); %V/f approximation: we want to keep
 % Rated torque (Nm)
 T_r = P_r/(N_r*2*pi/60); % T = P/w
 % Maximum authorised torque (Nm)
-T_sat = T_r; 
+T_sat = 1*T_r; 
 
-Ts_w = 80/f_switch; % 80 choisi un peu au pif honnetement
+Ts_w = 150/f_switch; % 80 choisi un peu au pif honnetement
 T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
 % 1.5 PWM = delay of 0.5 and controller = delay of 1 (cf. (1) Slide 18)
 K_sigma = 1; % Equivalent gain of all elements, simplified to 1 (cf. (1) Slide 18)
 T_n = 4*T_sigma; % Tuning w/ symmetrical optimum (*)
 T_i = 8*K_sigma*T_sigma^2/J; % Tuning w/ symmetrical optimum (*)
-Ki = 1/T_i*Ts_w; % *T_sw bc Tustin (2)
-Kp = T_n/T_i + Ki/2; %+K_i/2 bc Tustin
+Ki = 1/T_i; %*Ts_w; % *T_sw bc Tustin (2)
+Kp = T_n/T_i; % + Ki/2; %+K_i/2 bc Tustin
 
 % (1) Refresh slides EE-465_W2_BOOST_MODELING_PI
 
