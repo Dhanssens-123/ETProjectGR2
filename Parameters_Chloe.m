@@ -77,7 +77,7 @@ L_rectif = 10e-3;
 % Diode Ron (Ohm)
 R_on_rect = 1e-3;
 % Diode Vf (V)
-V_f_rect = 0;
+V_f_rect = 0.8;
 % Diode Snubber R (Ohm)
 R_snub_rect = 500;
 % Diode Subber C (F)
