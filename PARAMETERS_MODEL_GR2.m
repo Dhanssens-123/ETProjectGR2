@@ -20,7 +20,7 @@ fs_w = 1/10*f_switch; % 10 to 100 times slower than the switching (PWM) BW
 Ts_w = 1/fs_w;
 
 %%% Powergui Discrete Step Time
-Ts = 1e-5; % Ts <= T_switch & Ts == Even
+Ts = 5e-6; % Ts <= T_switch & Ts == Even
 
 %% Induction Motor
 
@@ -137,10 +137,10 @@ C_snub_inv = inf; % TO CHECK (cf. Matlab Documentation)
 T_tot = 10;
 
 % Speed Reference Steps
-t_rampup_start = 0.1*T_tot;
+t_rampup_start = 0.05*T_tot;
 t_rampup_end = 0.4*T_tot;
 t_rampdown_start = 0.6*T_tot;
-t_rampdown_end = 0.9*T_tot;
+t_rampdown_end = 0.95*T_tot;
 % Torque Load Delay
 t_delay = 0.05*T_tot;
 
@@ -155,7 +155,7 @@ Slope_up = N_steady/(t_rampup_end - t_rampup_start);
 Slope_down = -N_steady/(t_rampdown_end - t_rampdown_start);
 
 % Torque load (Nm)
-T_load = 100; % Rated torque
+T_load = 0.8*T_r; % Rated torque
 
 % Maximum authorised torque (Nm)
 T_sat = 0.9*T_max; 
