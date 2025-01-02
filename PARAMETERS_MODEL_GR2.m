@@ -20,7 +20,7 @@ fs_w = 1/10*f_switch; % 10 to 100 times slower than the switching (PWM) BW
 Ts_w = 1/fs_w;
 
 %%% Powergui Discrete Step Time
-Ts = 5e-6; % Ts <= T_switch & Ts == Even
+Ts = 1e-5; % Ts <= T_switch & Ts == Even
 
 %% Induction Motor
 
@@ -142,7 +142,8 @@ t_rampup_end = 0.4*T_tot;
 t_rampdown_start = 0.6*T_tot;
 t_rampdown_end = 0.95*T_tot;
 % Torque Load Delay
-t_delay = 0.05*T_tot;
+t_delay_up = 0.05*T_tot;
+t_delay_down = 0.01*T_tot;
 
 % Steady Speed (RPM)
 N_steady = N_r;
@@ -155,10 +156,10 @@ Slope_up = N_steady/(t_rampup_end - t_rampup_start);
 Slope_down = -N_steady/(t_rampdown_end - t_rampdown_start);
 
 % Torque load (Nm)
-T_load = 0.8*T_r; % Rated torque
+T_load = 0.8*T_r; % 80% of Rated torque
 
 % Maximum authorised torque (Nm)
-T_sat = 0.9*T_max; 
+T_sat = 0.9*T_max; % Less than Breakdown torque
 
 %% Control - Controller Design
 
