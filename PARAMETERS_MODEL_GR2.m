@@ -81,7 +81,7 @@ I_s = V_s/abs(Z_eq);
 I_r = I_s*abs(Z_m/(Z_r+Z_m));
 
 % Torques (3 phases -> Multiply by 3/2)
-T_mech = 3/2*1/w_s_mech*V_s^2/((R_s+R_r/slip_r)^2 + (X_ls+X_lr^2))*R_r/slip_r;
+T_mech = 3/2*1/w_s_mech*V_s^2/((R_s+R_r/slip_r)^2 + (X_ls+X_lr)^2)*R_r/slip_r;
 T_max = 3/2*1/(2*w_s_mech)*V_s^2/(R_s + sqrt(R_s^2+(X_ls+X_lr)^2)); % Breakdown
 
 % Rated torque (Nm)
