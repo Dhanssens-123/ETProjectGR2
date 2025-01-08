@@ -20,7 +20,7 @@ fs_w = 1/10*f_switch; % 10 to 100 times slower than the switching (PWM) BW
 Ts_w = 1/fs_w;
 
 %%% Powergui Discrete Step Time
-Ts = 5e-5; %1e-5; % Ts <= T_switch & Ts == Even
+Ts = 1e-6; % Ts < T_switch & Ts not a multiple of T_switch
 
 %% Induction Motor
 
@@ -29,7 +29,7 @@ P_r = 19e3;
 % Rated line voltage (V)
 V_r = 400;
 % Stator voltage
-V_s = V_r/sqrt(3); % Phase voltage
+V_s = V_r/sqrt(3); % Phase-to-Neutral
 % Pole Number
 P = 4;
 % Pole pairs
@@ -95,54 +95,59 @@ Phi_n = V_s/w_s; % Keep it constat (V/f control)
 % Phase-to-phase RMS voltage (V)
 U_ac = 380;
 f_grid = 50;
-R_grid = 0.2; % TO CHECK
-L_grid = 20e-6; % TO CHECK
+R_grid = 0.005; % See IEEE Ref
+L_grid = 1.5e-6; % See IEEE Ref
 
 %% Rectifier
+
+% Braking Rheostat Control
+VdcMin = 0.95*sqrt(2)*U_ac; % Min Allowed DC Voltage
+VdcMax = sqrt(2)*U_ac; % Max Allowed DC Voltage
+Rbr = 20; % Braking Resistance
 
 % Output inductor (H)
 L_rectif = 10e-3;
 
 % Diode Ron (Ohm)
-R_on_rect = 1e-3; % TO CHECK
+R_on_rect = 5e-3; % See Typical Values
 % Diode Vf (V)
-V_f_rect = 0.8; % TO CHECK
+V_f_rect = 0.8; % See Typical Values
 % Diode Snubber R (Ohm)
-R_snub_rect = 500; % TO CHECK (cf. Matlab Documentation)
+R_snub_rect = 500; % MATLAB Basic Value
 % Diode Subber C (F)
-C_snub_rect = 250e-9; % TO CHECK (cf. Matlab Documentation)
+C_snub_rect = 250e-9; % MATLAB Basic Value
  
 %% Inverter
 
 % Input DC-link capacitor (F)
 C_dc = 15e-3;
 
+% SKM260MB170SCH17 SiC MOSFET Module
 % FET Ron (Ohm)
-% R_on_inv = 1e-1; % TO CHECK
-R_on_inv = 4e-3; % TO CHECK
+R_on_inv = 1e-2; % DataSheet
 % Internal Diode Resistance (Ohm)
-R_d_inv  = 4.17e-3; % TO CHECK
+R_d_inv  = 6e-3; % DataSheet
 % Internal diode inductance (H)
-L_on_inv = 0; % TO CHECK
+L_on_inv = 0; % Neglected
 % Internal Diode Vf (V)
-V_f_inv = 0; % TO CHECK
+V_f_inv = 0.96; % DataSheet
 % Snubber R (Ohm)
-R_snub_inv = 1e5; % TO CHECK (cf. Matlab Documentation)
+R_snub_inv = 1e5; % MATLAB Basic Value
 % Snubber C (F)
-C_snub_inv = inf; % TO CHECK (cf. Matlab Documentation)
+C_snub_inv = inf; % MATLAB Basic Value
 
 %% Control - Reference
 
 % Total Duration
-T_tot = 10;
+T_tot = 8;
 
 % Speed Reference Steps
 t_rampup_start = 0.05*T_tot;
-t_rampup_end = 0.4*T_tot;
-t_rampdown_start = 0.6*T_tot;
+t_rampup_end = 0.25*T_tot;
+t_rampdown_start = 0.75*T_tot;
 t_rampdown_end = 0.95*T_tot;
 % Torque Load Delay
-t_delay_up = 0.05*T_tot;
+t_delay_up = 0.03*T_tot;
 t_delay_down = 0.01*T_tot;
 
 % Steady Speed (RPM)
@@ -164,7 +169,7 @@ T_sat = 0.9*T_max; % Less than Breakdown torque
 %% Control - Controller Design
 
 % Actuator - Equivalent Delay
-T_sigma = 1.5*Ts_w; % Equivalent time cst (delay in a controlled system), 
+T_sigma = 1*Ts_w; % Equivalent time cst (delay in a controlled system), 
 K_sigma = 1; % Equivalent gain
 
 % Controller - Magnitude Optimum Method
