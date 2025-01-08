@@ -169,7 +169,7 @@ T_sat = 0.9*T_max; % Less than Breakdown torque
 %% Control - Controller Design
 
 % Actuator - Equivalent Delay
-T_sigma = 1*Ts_w; % Equivalent time cst (delay in a controlled system), 
+T_sigma = 1*Ts_w; % Equivalent time cst (delay in a controlled system)
 K_sigma = 1; % Equivalent gain
 
 % Controller - Magnitude Optimum Method
