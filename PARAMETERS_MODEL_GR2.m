@@ -20,7 +20,7 @@ fs_w = 1/10*f_switch; % 10 to 100 times slower than the switching (PWM) BW
 Ts_w = 1/fs_w;
 
 %%% Powergui Discrete Step Time
-Ts = 1e-6; % Ts < T_switch & Ts not a multiple of T_switch
+Ts = 5e-6; % Ts < T_switch & Ts not a multiple of T_switch
 
 %% Induction Motor
 
